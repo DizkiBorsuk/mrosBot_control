@@ -1,0 +1,10 @@
+<launch>
+    <node pkg = "rosserial_python" name = "serial_node" type = "serial_node.py">
+        <param name="port" value="/dev/ttyACM0"/> <!-- Port zmienić w zależności od potrzeb -->
+        <!--param name="baud" value="115200"/ --> <!-- Czestotliwosc komunikacji jest ustawiona domyslenie -->
+    </node>
+
+  <node pkg= "mrosBot_control" name = "keyboard_motor_control" type = "keyboard_motor_control"/>
+  <node pkg= "mrosBot_control" name = "tf_broadcaster" type = "tf_broadcaster"/>
+  <node pkg= "mrosBot_control" name = "odometry" type = "odometry"/>
+</launch>
