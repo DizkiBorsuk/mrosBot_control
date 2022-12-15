@@ -6,5 +6,5 @@
 
   <node pkg= "mrosBot_control" name = "keyboard_motor_control" type = "keyboard_motor_control"/>
   <node pkg= "mrosBot_control" name = "tf_broadcaster" type = "tf_broadcaster"/>
-  <node pkg= "mrosBot_control" name = "odometry" type = "odometry"/>
+  <node pkg= "mrosBot_control" name = "odometry" type = "odometry" output = "screen"/>
 </launch>

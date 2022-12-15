@@ -74,8 +74,6 @@ int main(int argc, char **argv){
     ros::NodeHandle node_obj; 
 	ros::Rate loop_rate(10);
 
-
-
 	float Acc_x,Acc_y,Acc_z;
 	float Gyro_x,Gyro_y,Gyro_z;
 	float Ax=0, Ay=0, Az=0;
@@ -83,7 +81,7 @@ int main(int argc, char **argv){
 	fd = wiringPiI2CSetup(MPU6050_I2C_ADDR);   /*Initializes I2C with device Address*/
 	MPU6050_Init();		                 /* Initializes MPU6050 */
 	
-	while(ros::ok)
+	while(ros::ok())
 	{
 		/*Read raw value of Accelerometer and gyroscope from MPU6050*/
 		Acc_x = read_raw_data(ACCEL_XOUT_H, ACCEL_XOUT_L);
@@ -103,7 +101,7 @@ int main(int argc, char **argv){
 		Gy = Gyro_y/131;
 		Gz = Gyro_z/131;
 		
-		ROS_INFO("\n Gx=%.3f °/s\tGy=%.3f °/s\tGz=%.3f °/s\tAx=%.3f g\tAy=%.3f g\tAz=%.3f g\n",Gx,Gy,Gz,Ax,Ay,Az);
+		ROS_INFO("\n Gx=%.3f deg/s\tGy=%.3f deg/s\tGz=%.3f deg/s\tAx=%.3f g\tAy=%.3f g\tAz=%.3f g\n",Gx,Gy,Gz,Ax,Ay,Az);
 		ros::spinOnce();
 		loop_rate.sleep(); 
 	}

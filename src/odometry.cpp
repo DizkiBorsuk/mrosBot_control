@@ -9,7 +9,7 @@
 
 int left_pos = 0, right_pos = 0;
 double right_wheel_pos = 0.0, left_wheel_pos = 0.0, prevLpos = 0.0, prevRpos=0.0; 
-float wheelR, platformWidth = 0.14; // m  
+float wheelR = 0.065, platformWidth = 0.145; // m  
 
 float x = 0.0, y = 0.0, th = 0.0; 
 float dx = 0.0, dy= 0.0, dth = 0.0, dt; 
@@ -20,14 +20,14 @@ void posA_callback(const std_msgs::Int32& msg_posA)
 {
     left_pos = -msg_posA.data;
     left_wheel_pos += left_pos/4150.0; //m
-    ROS_INFO("pozycja A : %f", left_wheel_pos);
+    //ROS_INFO("pozycja A : %f", left_wheel_pos);
 }
 
 void posB_callback(const std_msgs::Int32& msg_posB)
 {
     right_pos= msg_posB.data; 
     right_wheel_pos += right_pos/4150.0; 
-    ROS_INFO("pozycja B : %f", right_wheel_pos);
+    //ROS_INFO("pozycja B : %f", right_wheel_pos);
 }
 
 
@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "odometry_node");
     ros::NodeHandle node_obj; 
 
-    int freq = 50; 
+    int freq = 10; 
     ros::Rate loop_rate(freq); 
 
     ros::Subscriber posA_subscriber = node_obj.subscribe("/arduino_msgs/posA",10,posA_callback);
@@ -51,11 +51,16 @@ int main(int argc, char **argv)
 
     while(ros::ok())
     {
+        ros::spinOnce();
+        current_time = ros::Time::now();
         dt = (current_time - last_time).toSec();
 
         r_wheel_vel = (right_wheel_pos - prevRpos)/dt; 
         l_wheel_vel = (left_wheel_pos - prevLpos)/dt; 
         bot_velocity = (r_wheel_vel + l_wheel_vel)/2; 
+        ROS_INFO("r_wheel_vel: %f", r_wheel_vel );
+        ROS_INFO("l_wheel_vel: %f", l_wheel_vel );
+
 
         dth = ((r_wheel_vel - l_wheel_vel)/platformWidth)*dt; // m/s /m
         dx = (bot_velocity*cos(th))*dt; 
@@ -71,10 +76,9 @@ int main(int argc, char **argv)
 
         prevRpos = right_wheel_pos;
         prevLpos = left_wheel_pos;
+        last_time = current_time;
 
         pose_publisher.publish(pose_msg);
-
-        ros::spinOnce();
         loop_rate.sleep();  
     }
     return 0; 
