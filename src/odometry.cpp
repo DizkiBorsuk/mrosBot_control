@@ -69,6 +69,8 @@ int main(int argc, char **argv)
         x += dx; 
         y += dy; 
         th += dth;   
+        ROS_INFO("x: %f", x);
+        ROS_INFO("y %f", y);
 
         pose_msg.x = x;
         pose_msg.y = y; 
