@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include <std_msgs/Int32.h>
 #include <std_msgs/String.h>
+#include <geometry_msgs/Twist.h>
 
 #include <iostream>
 #include <fcntl.h>          // FILE control
@@ -15,8 +16,10 @@
 
 double r_speed = 0; 
 double l_speed = 0; 
-double ws_speed_step = 0.1, lr_speed_step = 0.1; 
-double max_speed = 2; 
+double ws_speed_step = 10, lr_speed_step = 5; 
+double max_speed = 80; 
+float linear_xv, linear_yv, linear_zv; 
+float angular_zv, angular_xv, angular_yv;
 
 int getch(void)
 {
