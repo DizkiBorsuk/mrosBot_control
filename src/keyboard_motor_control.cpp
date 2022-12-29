@@ -15,8 +15,8 @@
 
 double r_speed = 0; 
 double l_speed = 0; 
-double ws_speed_step = 0.05, lr_speed_step = 0.002; 
-double max_speed = 2; 
+double ws_speed_step = 0.1, lr_speed_step = 0.1; 
+double max_speed = 80; 
 
 int getch(void)
 {
